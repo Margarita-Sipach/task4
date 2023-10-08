@@ -1,4 +1,5 @@
 import React, { Suspense, memo, useMemo } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { Route, Routes } from 'react-router-dom';
 import { routeConfig } from 'shared/config/routeConfig/routeConfig';
 
@@ -17,8 +18,8 @@ export const AppRouter = memo(() => {
                     key={path}
                     path={path}
                     element={(
-                        <Suspense fallback="Loading...">
-                            <div className="page-wrapper">{element}</div>
+                        <Suspense fallback={<Spinner className='position-absolute top-50 start-50'/>}>
+                            {element}
                         </Suspense>
                     )}
                 />
