@@ -9,17 +9,17 @@ import { Checkbox } from 'shared/ui/Checkbox';
 export const TableBody = () => {
     const dispatch = useAppDispatch();
     const users = useSelector(getUsersInfo);
+    const isAllChecked = useSelector(getIsAllChecked);
 
     const generateCheckedCells = useCallback(
-        (isAllChecked: boolean) => Object.fromEntries(users.map((item) => [item._id, isAllChecked])),
-        [users],
+        () => Object.fromEntries(users.map((item) => [item._id, isAllChecked])), 
+        [users, isAllChecked],
     );
 
-    const isAllChecked = useSelector(getIsAllChecked);
-    const [isChecked, setIsChecked] = useState(generateCheckedCells(isAllChecked));
+    const [isChecked, setIsChecked] = useState(generateCheckedCells());
 
     useEffect(() => {
-        setIsChecked(generateCheckedCells(isAllChecked));
+        setIsChecked(generateCheckedCells());
     }, [isAllChecked, generateCheckedCells]);
 
     useEffect(() => {
@@ -27,7 +27,6 @@ export const TableBody = () => {
     }, [dispatch]);
 
     const onChange = (id: string, val: boolean) => {
-        console.log(id, val);
         dispatch(infoActions.checkOne(id));
         setIsChecked({ ...isChecked, [id]: val });
     };

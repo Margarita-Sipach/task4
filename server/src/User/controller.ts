@@ -23,11 +23,10 @@ class UserController {
   async update (req: Request, res: Response) {
     try {
       const { ids, isActive } = req.body
-      console.log(ids, isActive)
       await ids.forEach(async (id: string) => {
         await UserService.update(id, isActive)
       })
-      return res.json('success')
+      return res.json(await UserService.getAll())
     } catch (e) {
       res.status(500).json(e)
     }
@@ -38,7 +37,7 @@ class UserController {
       await req.body.forEach(async (id: string) => {
         await UserService.delete(id)
       })
-      return res.json('success')
+      return res.json(await UserService.getAll())
     } catch (e) {
       res.status(500).json(e)
     }

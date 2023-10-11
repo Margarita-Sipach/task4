@@ -1,10 +1,9 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, isPending, isRejected } from '@reduxjs/toolkit';
 import { UserType } from 'shared/types/user';
 import { USER_LOCALSTORAGE_KEY } from 'shared/const/localstorage';
-import { signUp } from '../services/signUp/signUp';
 import { UserSchema } from '../types/userSchema';
-import { signIn } from '../services/signIn/signIn';
-import { getUserById } from '../services/getUserById/getUserById';
+import { FulfilledAction, PendingAction, RejectedAction, isFulfilledAction, isPendingAction, isRejectedAction } from 'shared/types/redux';
+import { SliceNames } from 'shared/redux/sliceNames';
 
 const initialState: UserSchema = {
     isLoading: false,
@@ -13,7 +12,7 @@ const initialState: UserSchema = {
 };
 
 export const userSlice = createSlice({
-    name: 'user',
+    name: SliceNames.user,
     initialState,
     reducers: {
         signOut: (state: UserSchema) => {
@@ -23,45 +22,19 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(signUp.pending, (state) => {
-                state.error = undefined;
-                state.isLoading = true;
-                state.data = undefined;
-            })
-            .addCase(signUp.fulfilled, (state, action: PayloadAction<UserType>) => {
-                state.data = action.payload;
-                state.isLoading = false;
-            })
-            .addCase(signUp.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-            })
-            .addCase(signIn.pending, (state) => {
-                state.error = undefined;
-                state.isLoading = true;
-                state.data = undefined;
-            })
-            .addCase(signIn.fulfilled, (state, action: PayloadAction<UserType>) => {
-                state.isLoading = false;
-                state.data = action.payload;
-            })
-            .addCase(signIn.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-            })
-            .addCase(getUserById.pending, (state) => {
-                state.error = undefined;
-                state.isLoading = true;
-                state.data = undefined;
-            })
-            .addCase(getUserById.fulfilled, (state, action: PayloadAction<UserType>) => {
-                state.isLoading = false;
-                state.data = action.payload;
-            })
-            .addCase(getUserById.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-            });
+			.addMatcher(isPendingAction(SliceNames.user), (state, action) => {
+				state.isLoading = true
+				state.error = undefined
+			})
+			.addMatcher(isRejectedAction(SliceNames.user), (state, action) => {
+				state.isLoading = false;
+				console.log('rejected')
+                state.error = action.payload as string;
+			})
+            .addMatcher(isFulfilledAction(SliceNames.user), (state, action) => {
+				state.isLoading = false;
+                state.data = action.payload as UserType;
+			})
     },
 });
 

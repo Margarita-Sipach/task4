@@ -7,7 +7,7 @@ export const deleteUsers = createAsyncThunk<UserType[], void, ThunkConfig<string
     async (_, { extra, rejectWithValue, getState }) => {
         try {
             const { info } = getState();
-            const data = await extra.api.deleteUsers(info.checkedIds);
+            const data: UserType[] = await extra.api.deleteUsers(info.checkedIds);
 
             return data;
         } catch (error) {

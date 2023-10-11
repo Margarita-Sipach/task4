@@ -1,9 +1,11 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { AsyncThunk, PayloadAction, createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
 import { UserType } from 'shared/types/user';
 import { InfoSchema } from '../types/infoSchema';
 import { fetchUsers } from '../services/fetchUsers/fetchUsers';
 import { deleteUsers } from '../services/deleteUsers/deleteUsers';
 import { updateUsers } from '../services/updateUsers/updateUsers';
+import { FulfilledAction, PendingAction, RejectedAction, isFulfilledAction, isPendingAction, isRejectedAction } from 'shared/types/redux';
+import { SliceNames } from 'shared/redux/sliceNames';
 
 const initialState: InfoSchema = {
     checkedIds: [],
@@ -22,60 +24,28 @@ export const infoSlice = createSlice({
             state.checkedIds = state.isAllChecked ? state.users.map((item) => item._id) : [];
         },
         checkOne: (state, action: PayloadAction<string>) => {
-            const ids = state.checkedIds; const
-                id = action.payload;
-            state.checkedIds = ids.includes(id)
-                ? ids.filter((item) => item !== id)
-                : [...ids, id];
-        },
+            const ids = state.checkedIds, chengedId = action.payload;
+            state.checkedIds = ids.includes(chengedId)
+                ? ids.filter((id) => id !== chengedId)
+                : [...ids, chengedId];
+        }
     },
 
     extraReducers: (builder) => {
         builder
-            .addCase(fetchUsers.pending, (state) => {
-                state.error = undefined;
+			.addMatcher(isPendingAction(SliceNames.info), (state, action) => {
+				state.error = undefined;
                 state.isLoading = true;
-                state.users = [];
-            })
-            .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<UserType[]>) => {
-                state.users = action.payload;
-                state.isLoading = false;
-            })
-            .addCase(fetchUsers.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-            })
-            .addCase(deleteUsers.pending, (state) => {
-                state.error = undefined;
-                state.isLoading = true;
-            })
-            .addCase(deleteUsers.fulfilled, (state) => {
-                state.isLoading = false;
-                state.users = state.users
-                    .filter(({ _id }) => !state.checkedIds.includes(_id));
-                state.checkedIds = [];
-            })
-            .addCase(deleteUsers.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-            })
-            .addCase(updateUsers.pending, (state) => {
-                state.error = undefined;
-                state.isLoading = true;
-            })
-            .addCase(updateUsers.fulfilled, (state, action: PayloadAction<boolean>) => {
-                state.users = state.users.map((item) => {
-                    const isActive = state.checkedIds.includes(item._id)
-                        ? action.payload
-                        : item.isActive;
-                    return { ...item, isActive };
-                });
-                state.isLoading = false;
-            })
-            .addCase(updateUsers.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-            });
+			})
+			.addMatcher(isRejectedAction(SliceNames.info), (state, action) => {				
+				state.isLoading = false;
+                state.error = action.payload as string;
+			})
+            .addMatcher(isFulfilledAction(SliceNames.info), (state, action) => {
+				state.isLoading = false;
+				state.checkedIds = [];
+				state.users = action.payload as UserType[]
+			})
     },
 });
 
