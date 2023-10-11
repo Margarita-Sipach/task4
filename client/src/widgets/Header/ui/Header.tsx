@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Navbar } from 'react-bootstrap';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { AppNav } from './AppNav';
 

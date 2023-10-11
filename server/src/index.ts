@@ -1,26 +1,16 @@
 import express, { type NextFunction, type Request, type Response } from 'express'
 import mongoose from 'mongoose'
+import cors from 'cors'
 
 import router from './router/router'
 
 const PORT = 5000
 const DB_URL = 'mongodb+srv://user:user@cluster0.p4kyw8m.mongodb.net/?retryWrites=true&w=majority'
 
-const allowCrossDomain = (_: Request, res: Response, next: NextFunction) => {
-  const group = 'Access-Control-Allow-'
-  const headers = [
-    [`${group}Origin`, '*'],
-    [`${group}Methods`, 'GET,PUT,POST,DELETE'],
-    [`${group}Headers`, 'Content-Type']
-  ]
-  headers.forEach((item: string[]) => res.header(item))
-  next()
-}
-
 const app = express()
-app.use(allowCrossDomain)
+app.use(cors())
 app.use(express.json())
-app.use('/users', router)
+app.use('/', router)
 
 const startApp = async () => {
   try {

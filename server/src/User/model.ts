@@ -1,12 +1,13 @@
 import mongoose from 'mongoose'
-import { STATUS } from './type'
 
-const commonParams = (type: typeof String | typeof Date) => ({
+const commonParams = <T>(type: T) => ({
   type,
   required: true
 })
 
 const stringParams = commonParams(String)
+
+const booleanParams = commonParams(Boolean)
 
 const dateParams = {
   ...commonParams(Date),
@@ -22,10 +23,9 @@ const User = new mongoose.Schema({
   password: stringParams,
   signInDate: dateParams,
   signUpDate: dateParams,
-  status: {
-    ...stringParams,
-    enum: Object.values(STATUS),
-    default: STATUS.active
+  isActive: {
+    ...booleanParams,
+    default: true
   }
 })
 

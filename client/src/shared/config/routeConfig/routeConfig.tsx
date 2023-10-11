@@ -5,14 +5,14 @@ import { SignUpPage } from 'pages/SignUpPage';
 import { RouteProps } from 'react-router-dom';
 
 type AppRoutesProps = RouteProps & {
-	authOnly?: boolean
+authOnly?: boolean
 }
 
 export enum AppRoutes {
     MAIN = 'main',
     SIGN_IN = 'sign_in',
-	SIGN_UP = 'sign_up',
-	// last
+SIGN_UP = 'sign_up',
+// last
     NOT_FOUND = 'not_found',
 }
 

@@ -4,18 +4,18 @@ import { Form } from 'react-bootstrap';
 type HTMLInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>
 
 interface InputProps extends HTMLInputProps{
-	label?: string;
-	type?: string;
-	value?: string;
-	placeholder?: string;
-	onChange?: (val: string) => void
+label?: string;
+type?: string;
+value?: string;
+placeholder?: string;
+onChange?: (val: string) => void
 }
 
-export const Input: FC<InputProps> = memo((props) => {
+export const Input: FC<InputProps> = memo((props: InputProps) => {
     const {
-        label,
-        type,
-        value,
+        label = '',
+        type = 'text',
+        value = '',
         placeholder = `Enter ${label}`,
         onChange,
     } = props;

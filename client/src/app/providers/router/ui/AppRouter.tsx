@@ -18,7 +18,7 @@ export const AppRouter = memo(() => {
                     key={path}
                     path={path}
                     element={(
-                        <Suspense fallback={<Spinner className='position-absolute top-50 start-50'/>}>
+                        <Suspense fallback={<Spinner className="position-absolute top-50 start-50" />}>
                             {element}
                         </Suspense>
                     )}

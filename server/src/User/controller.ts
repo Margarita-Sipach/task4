@@ -22,8 +22,12 @@ class UserController {
 
   async update (req: Request, res: Response) {
     try {
-      const updatedUser = UserService.update(req.body)
-      return res.json(updatedUser)
+      const { ids, isActive } = req.body
+      console.log(ids, isActive)
+      await ids.forEach(async (id: string) => {
+        await UserService.update(id, isActive)
+      })
+      return res.json('success')
     } catch (e) {
       res.status(500).json(e)
     }
@@ -31,8 +35,36 @@ class UserController {
 
   async delete (req: Request, res: Response) {
     try {
-      const { id } = req.params
-      const user = await UserService.delete(id)
+      await req.body.forEach(async (id: string) => {
+        await UserService.delete(id)
+      })
+      return res.json('success')
+    } catch (e) {
+      res.status(500).json(e)
+    }
+  }
+
+  async signIn (req: Request, res: Response) {
+    try {
+      const user = await UserService.signIn(req.body)
+      return res.json(user)
+    } catch (e) {
+      res.status(500).json(e)
+    }
+  }
+
+  async signUp (req: Request, res: Response) {
+    try {
+      const user = await UserService.signUp({ ...req.body, isActive: true })
+      return res.json(user)
+    } catch (e) {
+      res.status(500).json(e)
+    }
+  }
+
+  async getUserById (req: Request, res: Response) {
+    try {
+      const user = await UserService.getUserById(req.params.id)
       return res.json(user)
     } catch (e) {
       res.status(500).json(e)

@@ -1,7 +1,7 @@
-import { memo } from "react"
+import { memo } from 'react';
 
 interface TitleProps{
-	children: string
+children: string
 }
 
-export const Title = memo(({children}: TitleProps) => <h1 className="text-center mb-3">{children}</h1>)
+export const Title = memo(({ children }: TitleProps) => <h1 className="text-center mb-3">{children}</h1>);

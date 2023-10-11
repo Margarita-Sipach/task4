@@ -14,7 +14,6 @@ module.exports = {
     },
     plugins: ['react', '@typescript-eslint', 'react-hooks'],
     rules: {
-        'no-tabs': 'off',
         'react/jsx-indent': [2, 4],
         'react/jsx-indent-props': [2, 4],
         indent: [2, 4],
@@ -40,6 +39,7 @@ module.exports = {
         'react-hooks/exhaustive-deps': 'error',
         'no-param-reassign': 'off',
         'no-undef': 'off',
+        'jsx-a11y/control-has-associated-label': 'warn',
     },
     globals: {
         __IS_DEV__: true,

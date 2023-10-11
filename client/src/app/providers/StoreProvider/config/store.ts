@@ -5,6 +5,8 @@ import {
 } from '@reduxjs/toolkit';
 import { api } from 'shared/api/api';
 import { NavigateFunction } from 'react-router-dom';
+import { userReducer } from 'entities/User';
+import { infoReducer } from 'entities/Info';
 import { StateSchema, ThunkExtraArg } from './StateSchema';
 import { createReducerManager } from './reducerManager';
 
@@ -15,6 +17,8 @@ export const createReduxStore = (
 ) => {
     const rootReducers: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
+        user: userReducer,
+        info: infoReducer,
     };
 
     const ReducerManager = createReducerManager(rootReducers);

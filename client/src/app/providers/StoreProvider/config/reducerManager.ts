@@ -20,7 +20,7 @@ export function createReducerManager(initialReducers: ReducersMapObject<StateSch
         },
         add: (key: StateSchemaKey, reducer: Reducer) => {
             if (!key || reducers[key]) return;
-            // reducers[key] = reducer;
+            reducers[key] = reducer;
             combinedReducer = combineReducers(reducers);
         },
         remove: (key: StateSchemaKey) => {
