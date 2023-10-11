@@ -1,11 +1,15 @@
-import { AsyncThunk, PayloadAction, createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
+import {
+    AsyncThunk, PayloadAction, createSlice, isFulfilled, isPending, isRejected,
+} from '@reduxjs/toolkit';
 import { UserType } from 'shared/types/user';
+import {
+    FulfilledAction, PendingAction, RejectedAction, isFulfilledAction, isPendingAction, isRejectedAction,
+} from 'shared/types/redux';
+import { SliceNames } from 'shared/redux/sliceNames';
 import { InfoSchema } from '../types/infoSchema';
 import { fetchUsers } from '../services/fetchUsers/fetchUsers';
 import { deleteUsers } from '../services/deleteUsers/deleteUsers';
 import { updateUsers } from '../services/updateUsers/updateUsers';
-import { FulfilledAction, PendingAction, RejectedAction, isFulfilledAction, isPendingAction, isRejectedAction } from 'shared/types/redux';
-import { SliceNames } from 'shared/redux/sliceNames';
 
 const initialState: InfoSchema = {
     checkedIds: [],
@@ -24,28 +28,29 @@ export const infoSlice = createSlice({
             state.checkedIds = state.isAllChecked ? state.users.map((item) => item._id) : [];
         },
         checkOne: (state, action: PayloadAction<string>) => {
-            const ids = state.checkedIds, chengedId = action.payload;
+            const ids = state.checkedIds; const
+                chengedId = action.payload;
             state.checkedIds = ids.includes(chengedId)
                 ? ids.filter((id) => id !== chengedId)
                 : [...ids, chengedId];
-        }
+        },
     },
 
     extraReducers: (builder) => {
         builder
-			.addMatcher(isPendingAction(SliceNames.info), (state, action) => {
-				state.error = undefined;
+            .addMatcher(isPendingAction(SliceNames.info), (state) => {
+                state.error = undefined;
                 state.isLoading = true;
-			})
-			.addMatcher(isRejectedAction(SliceNames.info), (state, action) => {				
-				state.isLoading = false;
+            })
+            .addMatcher(isRejectedAction(SliceNames.info), (state, action) => {
+                state.isLoading = false;
                 state.error = action.payload as string;
-			})
+            })
             .addMatcher(isFulfilledAction(SliceNames.info), (state, action) => {
-				state.isLoading = false;
-				state.checkedIds = [];
-				state.users = action.payload as UserType[]
-			})
+                state.isLoading = false;
+                state.checkedIds = [];
+                state.users = action.payload;
+            });
     },
 });
 

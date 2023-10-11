@@ -14,45 +14,41 @@ class UserService {
   }
 
   async update (id: string, isActive: boolean) {
-    if (!id) throw new Error('no user id')
+    if (!id) throw new Error("ID doesn't not exist")
     const updatedUser = await User.findByIdAndUpdate(id, { isActive }, { new: true })
+    if (!updatedUser) throw new Error("User doesn't not exist")
     return updatedUser
   }
 
   async delete (id: string) {
-    if (!id) throw new Error('no user id')
+    if (!id) throw new Error("ID doesn't not exist")
     const user = await User.findByIdAndDelete(id)
+    if (!user) throw new Error("User doesn't not exist")
     return user
   }
 
   async signIn (userData: SignUpType) {
-    const user = await User.findOne({ email: userData.email })
-    console.log(user)
-    if (!user) {
-      throw new Error('user not exist')
-    }
+    const user = await User.findOneAndUpdate({ email: userData.email }, { signInDate: Date.now() })
+    if (!user) throw new Error("User doesn't not exist")
     const validPassword = bcrypt.compareSync(userData.password, user.password)
-    if (!validPassword) {
-      throw new Error('other password')
-    }
+    if (!validPassword) throw new Error('Wrong password')
+    if (!user.isActive) throw new Error('You was blocked')
     return user
   }
 
   async signUp (userData: SignUpType) {
     const isUserExist = await User.findOne({ email: userData.email })
-    if (isUserExist) {
-      throw new Error('user exist')
-    }
+    if (isUserExist) throw new Error('User exist yet')
     const hashPassword = bcrypt.hashSync(userData.password, 7)
     const user = User.create({ ...userData, password: hashPassword })
     return await user
   }
 
   async getUserById (id: string) {
-    const user = await User.findOne({ _id: id, isActive: true })
-    if (!user) {
-      throw new Error('user not exist')
-    }
+    if (!id) throw new Error("ID doesn't not exist")
+    const user = await User.findById(id)
+    if (!user) throw new Error("User doesn't not exist")
+    if (!user.isActive) throw new Error('You was blocked')
     return user
   }
 }

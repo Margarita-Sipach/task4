@@ -1,7 +1,9 @@
-import { signUp } from 'entities/User';
+import { signUp, userActions } from 'entities/User';
 import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { AppModal } from 'shared/ui/AppModal';
 import { Input } from 'shared/ui/Input';
 import { PageContainer } from 'shared/ui/PageContainer';
 
@@ -22,8 +24,9 @@ const SignUpPage = () => {
     const handleRepeatPassword = (repeatedPassword: string) => setRepeatedPassword(repeatedPassword);
 
     const handleClick = async () => {
-        if (repeatedPassword !== formData.password) console.log('error');
-        else {
+        if (repeatedPassword !== formData.password) {
+            dispath(userActions.setError('Password and Repeated password different'));
+        } else {
             await dispath(signUp(formData));
         }
     };

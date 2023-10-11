@@ -18,7 +18,9 @@ export const Toolbar = () => {
 
     const onClick = (type: ButtonsType) => {
         if (type === ButtonsType.delete) dispatch(deleteUsers());
-        else dispatch(updateUsers(type === ButtonsType.active));
+        else {
+            dispatch(updateUsers(type === ButtonsType.active));
+        }
     };
 
     return (

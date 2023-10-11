@@ -12,7 +12,7 @@ export const TableBody = () => {
     const isAllChecked = useSelector(getIsAllChecked);
 
     const generateCheckedCells = useCallback(
-        () => Object.fromEntries(users.map((item) => [item._id, isAllChecked])), 
+        () => Object.fromEntries(users.map((item) => [item._id, isAllChecked])),
         [users, isAllChecked],
     );
 

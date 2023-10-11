@@ -1,7 +1,8 @@
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { infoActions, getIsAllChecked } from 'entities/Info';
+import { infoActions, getIsAllChecked, getCheckedIds } from 'entities/Info';
 import { useSelector } from 'react-redux';
 import { Checkbox } from 'shared/ui/Checkbox';
+import { useEffect } from 'react';
 
 const columnsNames = [
     'ID',
@@ -23,7 +24,7 @@ export const TableHeader = () => {
     return (
         <thead>
             <tr>
-                <th><Checkbox checked={isAllChecked} onChange={handleClick} /></th>
+                <th><Checkbox id="mainCheckbox" checked={isAllChecked} onChange={handleClick} /></th>
                 {columnsNames.map((item) => (
                     <th key={item}>{item}</th>
                 ))}

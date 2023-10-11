@@ -1,4 +1,4 @@
 export enum SliceNames{
-	user = "user",
-	info = "info"
+    user = 'user',
+    info = 'info'
 }

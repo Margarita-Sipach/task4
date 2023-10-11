@@ -10,11 +10,11 @@ export const AppRouter = memo(() => {
 
     const routes = useMemo(() => Object.values(routeConfig).filter((route) => {
         const isSignInUserPage = route.isSignIn && user;
-		const isSignOutUserPage = route.isSignOut && !user;
-		const isCommonPage = !route.isSignIn && !route.isSignOut
-		return isSignInUserPage || isSignOutUserPage || isCommonPage;
+        const isSignOutUserPage = route.isSignOut && !user;
+        const isCommonPage = !route.isSignIn && !route.isSignOut;
+        return isSignInUserPage || isSignOutUserPage || isCommonPage;
     }), [user]);
-	
+
     return (
         <Routes>
             {routes.map(({ element, path }) => (
