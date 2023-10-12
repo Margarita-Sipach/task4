@@ -11,7 +11,7 @@ export const deleteUsers = createAsyncThunk<UserType[], void, ThunkConfig<string
             const { info } = getState();
             if (!info.checkedIds.length) throw new Error(ERROR_MESSAGES.noCheckbox);
             const data: UserType[] = await extra.api.deleteUsers(info.checkedIds);
-			if (!data) throw new Error(ERROR_MESSAGES.noData);
+            if (!data) throw new Error(ERROR_MESSAGES.noData);
             return data;
         } catch (error) {
             return rejectWithValue(catchHandler(error));

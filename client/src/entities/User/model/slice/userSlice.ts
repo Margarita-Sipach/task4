@@ -1,14 +1,13 @@
 import {
-    AsyncThunk, AsyncThunkAction, PayloadAction, createSlice, isPending, isRejected,
+    PayloadAction, createSlice,
 } from '@reduxjs/toolkit';
 import { UserType } from 'shared/types/user';
 import { USER_LOCALSTORAGE_KEY } from 'shared/const/localstorage';
 import {
-    FulfilledAction, PendingAction, RejectedAction, isFulfilledAction, isPendingAction, isRejectedAction,
+    SliceNames, isFulfilledAction, isPendingAction, isRejectedAction,
 } from 'shared/types/redux';
-import { SliceNames } from 'shared/redux/sliceNames';
-import { UserSchema } from '../types/userSchema';
 import { removeLocalStorage } from 'shared/lib/localstorage';
+import { UserSchema } from '../types/userSchema';
 
 const initialState: UserSchema = {
     isLoading: false,
@@ -22,7 +21,7 @@ export const userSlice = createSlice({
     reducers: {
         signOut: (state: UserSchema) => {
             state.data = undefined;
-            removeLocalStorage(USER_LOCALSTORAGE_KEY)
+            removeLocalStorage(USER_LOCALSTORAGE_KEY);
         },
         setError: (state: UserSchema, action: PayloadAction<string>) => {
             state.error = action.payload;

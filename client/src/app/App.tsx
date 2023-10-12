@@ -15,11 +15,15 @@ export const App = () => {
     const isLoading = useSelector(getLoading);
 
     useEffect(() => {
-        localStorage.getItem(USER_LOCALSTORAGE_KEY) && dispatch(getUserById());
+        if (localStorage.getItem(USER_LOCALSTORAGE_KEY)) {
+            dispatch(getUserById());
+        }
     }, [dispatch]);
 
     useEffect(() => {
-        error && alert(error);
+        if (error) {
+            alert(error);
+        }
     }, [error]);
 
     return (

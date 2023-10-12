@@ -9,7 +9,7 @@ class UserController {
       const user = await UserService.create(req.body)
       return res.json(user)
     } catch (e) {
-      return serverErrorHandler(res, e);
+      return serverErrorHandler(res, e)
     }
   }
 
@@ -18,7 +18,7 @@ class UserController {
       const users = await UserService.getAll()
       return res.json(users)
     } catch (e) {
-		return serverErrorHandler(res, e);
+      return serverErrorHandler(res, e)
     }
   }
 
@@ -29,7 +29,7 @@ class UserController {
       const users = await UserService.getAll()
       return res.json(users)
     } catch (e) {
-        return serverErrorHandler(res, e);
+      return serverErrorHandler(res, e)
     }
   }
 
@@ -38,7 +38,7 @@ class UserController {
       await Promise.all(req.body.map(async (id: string) => await UserService.delete(id)))
       return res.json(await UserService.getAll())
     } catch (e) {
-		return serverErrorHandler(res, e);
+      return serverErrorHandler(res, e)
     }
   }
 
@@ -49,7 +49,7 @@ class UserController {
       const user = await UserService.signIn(req.body)
       return res.json(user)
     } catch (e) {
-		return serverErrorHandler(res, e);
+      return serverErrorHandler(res, e)
     }
   }
 
@@ -60,7 +60,7 @@ class UserController {
       const user = await UserService.signUp({ ...req.body, isActive: true })
       return res.json(user)
     } catch (e) {
-		return serverErrorHandler(res, e);
+      return serverErrorHandler(res, e)
     }
   }
 
@@ -69,7 +69,7 @@ class UserController {
       const user = await UserService.getUserById(req.params.id)
       return res.json(user)
     } catch (e) {
-		return serverErrorHandler(res, e);
+      return serverErrorHandler(res, e)
     }
   }
 }

@@ -10,7 +10,7 @@ export const getUserById = createAsyncThunk<UserType, void, ThunkConfig<string>>
     'user/getUserById',
     async (_, { extra, rejectWithValue }) => {
         try {
-            const id = getLocalStorage(USER_LOCALSTORAGE_KEY)
+            const id = getLocalStorage(USER_LOCALSTORAGE_KEY);
             if (!id) throw new Error(ERROR_MESSAGES.noId);
             const data = await extra.api.getUserById(id);
             if (!data) throw new Error(ERROR_MESSAGES.noData);

@@ -14,23 +14,23 @@ info: InfoSchema
 export type StateSchemaKey = keyof StateSchema;
 
 export interface ReducerManager {
-getReducerMap: () => ReducersMapObject<StateSchema>
-reduce: (state: StateSchema, action: AnyAction) => CombinedState<StateSchema>
-add: (key: StateSchemaKey, reducer: Reducer) => void
-remove: (key: StateSchemaKey) => void
+    getReducerMap: () => ReducersMapObject<StateSchema>
+    reduce: (state: StateSchema, action: AnyAction) => CombinedState<StateSchema>
+    add: (key: StateSchemaKey, reducer: Reducer) => void
+    remove: (key: StateSchemaKey) => void
 }
 
 export interface ReduxStoreWithManager extends EnhancedStore<StateSchema> {
-ReducerManager: ReducerManager
+    ReducerManager: ReducerManager
 }
 
 export interface ThunkExtraArg {
-api: API;
-navigate?: NavigateFunction;
+    api: API;
+    navigate?: NavigateFunction;
 }
 
 export interface ThunkConfig<T> {
-rejectValue: T;
-extra: ThunkExtraArg;
-state: StateSchema
+    rejectValue: T;
+    extra: ThunkExtraArg;
+    state: StateSchema
 }

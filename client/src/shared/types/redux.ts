@@ -1,5 +1,9 @@
-import { AnyAction, AsyncThunk } from '@reduxjs/toolkit';
-import { SliceNames } from 'shared/redux/sliceNames';
+import { AsyncThunk } from '@reduxjs/toolkit';
+
+export enum SliceNames{
+    user = 'user',
+    info = 'info'
+}
 
 enum RequestStates{
     pending = 'pending',

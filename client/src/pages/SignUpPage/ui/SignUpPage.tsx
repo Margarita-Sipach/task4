@@ -1,7 +1,7 @@
 import { signUp, userActions } from 'entities/User';
 import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { ERROR_MESSAGES } from 'shared/const/errorMessages';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { Input } from 'shared/ui/Input';
 import { PageContainer } from 'shared/ui/PageContainer';
@@ -17,14 +17,12 @@ const SignUpPage = () => {
     const [formData, setFormData] = useState(initData);
     const [repeatedPassword, setRepeatedPassword] = useState('');
 
-    const handleUsername = (username: string) => setFormData({ ...formData, username });
-    const handleEmail = (email: string) => setFormData({ ...formData, email });
-    const handlePassword = (password: string) => setFormData({ ...formData, password });
     const handleRepeatPassword = (repeatedPassword: string) => setRepeatedPassword(repeatedPassword);
+    const handleFormField = (key: string, val: string) => setFormData({ ...formData, [key]: val });
 
     const handleClick = async () => {
         if (repeatedPassword !== formData.password) {
-            dispath(userActions.setError('Password and Repeated password different'));
+            dispath(userActions.setError(ERROR_MESSAGES.differentPasswords));
         } else {
             await dispath(signUp(formData));
         }
@@ -36,18 +34,18 @@ const SignUpPage = () => {
                 <Input
                     label="Username"
                     value={formData.username}
-                    onChange={handleUsername}
+                    onChange={(val) => handleFormField('username', val)}
                 />
                 <Input
                     label="Email"
                     value={formData.email}
-                    onChange={handleEmail}
+                    onChange={(val) => handleFormField('email', val)}
                     type="email"
                 />
                 <Input
                     label="Password"
                     value={formData.password}
-                    onChange={handlePassword}
+                    onChange={(val) => handleFormField('password', val)}
                     type="password"
                 />
                 <Input
@@ -58,7 +56,7 @@ const SignUpPage = () => {
                 />
                 <Button
                     variant="primary"
-                    disabled={!Object.values(formData).every(Boolean)}
+                    disabled={!Object.values({ ...formData, repeatedPassword }).every(Boolean)}
                     onClick={handleClick}
                 >
                     OK

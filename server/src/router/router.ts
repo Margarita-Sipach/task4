@@ -13,7 +13,7 @@ const enum Routes {
 
 const checkIsEmpty = (key: string) => check(key, `${ERROR_MESSAGES.empty} ${key}`).notEmpty()
 
-const checkEmail = (key: string = "email") => [
+const checkEmail = (key: string = 'email') => [
   check(key, `${ERROR_MESSAGES.invalid} ${key}`).isEmail(),
   checkIsEmpty(key)
 ]

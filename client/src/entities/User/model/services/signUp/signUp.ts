@@ -12,7 +12,7 @@ export const signUp = createAsyncThunk<UserType, SignUpType, ThunkConfig<string>
         try {
             const data = await extra.api.signUp(formData);
             if (!data) throw new Error(ERROR_MESSAGES.noData);
-            setLocalStorage(USER_LOCALSTORAGE_KEY, data._id)
+            setLocalStorage(USER_LOCALSTORAGE_KEY, data._id);
             extra.navigate?.('/');
             return data;
         } catch (error) {

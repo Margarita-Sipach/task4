@@ -1,5 +1,3 @@
-import { getUser } from 'entities/User';
-import { useSelector } from 'react-redux';
 import { Title } from 'shared/ui/Title';
 import { AppTable } from 'widgets/Table';
 import { Toolbar } from 'widgets/Toolbar';

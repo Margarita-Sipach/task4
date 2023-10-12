@@ -1,15 +1,10 @@
 import {
-    AsyncThunk, PayloadAction, createSlice, isFulfilled, isPending, isRejected,
+    PayloadAction, createSlice,
 } from '@reduxjs/toolkit';
-import { UserType } from 'shared/types/user';
 import {
-    FulfilledAction, PendingAction, RejectedAction, isFulfilledAction, isPendingAction, isRejectedAction,
+    SliceNames, isFulfilledAction, isPendingAction, isRejectedAction,
 } from 'shared/types/redux';
-import { SliceNames } from 'shared/redux/sliceNames';
 import { InfoSchema } from '../types/infoSchema';
-import { fetchUsers } from '../services/fetchUsers/fetchUsers';
-import { deleteUsers } from '../services/deleteUsers/deleteUsers';
-import { updateUsers } from '../services/updateUsers/updateUsers';
 
 const initialState: InfoSchema = {
     checkedIds: [],
@@ -20,7 +15,7 @@ const initialState: InfoSchema = {
 };
 
 export const infoSlice = createSlice({
-    name: 'info',
+    name: SliceNames.info,
     initialState,
     reducers: {
         checkAll: (state, action: PayloadAction<boolean>) => {

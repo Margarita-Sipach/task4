@@ -2,9 +2,9 @@ import axios from 'axios';
 import { SignInType, SignUpType } from 'shared/types/user';
 
 enum routes {
-users = '/users',
-signIn = '/sign_in',
-signUp = '/sign_up',
+    users = '/users',
+    signIn = '/sign_in',
+    signUp = '/sign_up',
 }
 
 export class API {

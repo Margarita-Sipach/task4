@@ -9,7 +9,6 @@ import { UserType } from 'shared/types/user';
 type ReturnType = [UserType[], {[key: string]: boolean}, (id: string, val: boolean) => void]
 
 export const useCheckboxes = (): ReturnType => {
-
     const dispatch = useAppDispatch();
     const users = useSelector(getUsersInfo);
     const isAllChecked = useSelector(getIsAllChecked);
@@ -19,8 +18,9 @@ export const useCheckboxes = (): ReturnType => {
     }, [dispatch]);
 
     const checkedAllCells = useCallback(() => {
-        return Object.fromEntries(users.map((item) => [item._id, isAllChecked]))
-    }, [users, isAllChecked]);
+		const usersArr = users.map((item) => [item._id, isAllChecked]);
+		return Object.fromEntries(usersArr);
+	}, [users, isAllChecked]);
 
     const [checkboxes, setCheckboxes] = useState(checkedAllCells());
 
@@ -33,5 +33,5 @@ export const useCheckboxes = (): ReturnType => {
         setCheckboxes({ ...checkboxes, [id]: val });
     };
 
-	return [users, checkboxes, onChange]
-}
+    return [users, checkboxes, onChange];
+};

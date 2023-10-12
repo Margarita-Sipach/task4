@@ -15,8 +15,7 @@ const SignInPage = () => {
 
     const [formData, setFormData] = useState(initData);
 
-    const handleEmail = (email: string) => setFormData({ ...formData, email });
-    const handlePassword = (password: string) => setFormData({ ...formData, password });
+    const handleFormField = (key: string, val: string) => setFormData({ ...formData, [key]: val });
 
     const handleClick = () => {
         dispath(signIn(formData));
@@ -28,13 +27,13 @@ const SignInPage = () => {
                 <Input
                     label="Email"
                     value={formData.email}
-                    onChange={handleEmail}
+                    onChange={(val) => handleFormField('email', val)}
                     type="email"
                 />
                 <Input
                     label="Password"
                     value={formData.password}
-                    onChange={handlePassword}
+                    onChange={(val) => handleFormField('password', val)}
                     type="password"
                 />
                 <Button

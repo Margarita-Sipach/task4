@@ -1,5 +1,5 @@
-import { getUser, getUserById } from 'entities/User';
-import React, { Suspense, memo, useMemo } from 'react';
+import { getUser } from 'entities/User';
+import { Suspense, memo, useMemo } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';

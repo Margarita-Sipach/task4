@@ -1,8 +1,8 @@
 import { Checkbox } from 'shared/ui/Checkbox';
-import {useCheckboxes} from './hook/useCheckboxes'
+import { useCheckboxes } from './hook/useCheckboxes';
 
 export const TableBody = () => {
-    const [users, checkboxes, onChangeCheckboxes] = useCheckboxes()
+    const [users, checkboxes, onChangeCheckboxes] = useCheckboxes();
 
     return (
         <tbody>
