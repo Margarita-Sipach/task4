@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { ERROR_MESSAGES } from "shared/const/errorMessages";
 
-export const catchHandler = (error: any) => error.response.data.message
-|| error.response.data.errors.reduce((acc: string, { msg }: any) => acc + msg, '') || 'Unexpected error';
+export const catchHandler = (error: any) => {
+	return error.response.data.message || ERROR_MESSAGES.unexpected;
+}

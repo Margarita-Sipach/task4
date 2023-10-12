@@ -1,6 +1,7 @@
 import { validationResult } from 'express-validator'
 import UserService from './service'
 import { type Request, type Response } from 'express'
+import { clientErrorHandler, errorHandler, serverErrorHandler } from '../lib/errorHandlers'
 
 class UserController {
   async create (req: Request, res: Response) {
@@ -8,7 +9,7 @@ class UserController {
       const user = await UserService.create(req.body)
       return res.json(user)
     } catch (e) {
-      res.status(500).json(e)
+      return serverErrorHandler(res, e);
     }
   }
 
@@ -17,7 +18,7 @@ class UserController {
       const users = await UserService.getAll()
       return res.json(users)
     } catch (e) {
-      res.status(500).json(e)
+		return serverErrorHandler(res, e);
     }
   }
 
@@ -28,10 +29,7 @@ class UserController {
       const users = await UserService.getAll()
       return res.json(users)
     } catch (e) {
-      if (e instanceof Error) {
-        return res.status(500).json({ message: e.message })
-      }
-      return res.status(500).json({ message: 'Unexpected error' })
+        return serverErrorHandler(res, e);
     }
   }
 
@@ -40,38 +38,29 @@ class UserController {
       await Promise.all(req.body.map(async (id: string) => await UserService.delete(id)))
       return res.json(await UserService.getAll())
     } catch (e) {
-      if (e instanceof Error) {
-        return res.status(500).json({ message: e.message })
-      }
-      return res.status(500).json({ message: 'Unexpected error' })
+		return serverErrorHandler(res, e);
     }
   }
 
   async signIn (req: Request, res: Response) {
     try {
       const errors = validationResult(req)
-      if (!errors.isEmpty()) return res.status(400).json(errors)
+      if (!errors.isEmpty()) return clientErrorHandler(res, errors)
       const user = await UserService.signIn(req.body)
       return res.json(user)
     } catch (e) {
-      if (e instanceof Error) {
-        return res.status(500).json({ message: e.message })
-      }
-      return res.status(500).json({ message: 'Unexpected error' })
+		return serverErrorHandler(res, e);
     }
   }
 
   async signUp (req: Request, res: Response) {
     try {
       const errors = validationResult(req)
-      if (!errors.isEmpty()) return res.status(400).json(errors)
+      if (!errors.isEmpty()) return clientErrorHandler(res, errors)
       const user = await UserService.signUp({ ...req.body, isActive: true })
       return res.json(user)
     } catch (e) {
-      if (e instanceof Error) {
-        return res.status(500).json({ message: e.message })
-      }
-      return res.status(500).json({ message: 'Unexpected error' })
+		return serverErrorHandler(res, e);
     }
   }
 
@@ -80,10 +69,7 @@ class UserController {
       const user = await UserService.getUserById(req.params.id)
       return res.json(user)
     } catch (e) {
-      if (e instanceof Error) {
-        return res.status(500).json({ message: e.message })
-      }
-      return res.status(500).json({ message: 'Unexpected error' })
+		return serverErrorHandler(res, e);
     }
   }
 }

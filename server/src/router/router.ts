@@ -1,6 +1,7 @@
 import express from 'express'
 import { check } from 'express-validator'
 import PostController from '../User/controller'
+import { ERROR_MESSAGES } from '../const/errorMessages'
 
 const router = express.Router()
 
@@ -10,11 +11,11 @@ const enum Routes {
   users = '/users'
 }
 
-const checkIsEmpty = (key: string) => check(key, `Empty ${key}`).notEmpty()
+const checkIsEmpty = (key: string) => check(key, `${ERROR_MESSAGES.empty} ${key}`).notEmpty()
 
-const checkEmail = () => [
-  check('email', 'Invalid email').isEmail(),
-  checkIsEmpty('email')
+const checkEmail = (key: string = "email") => [
+  check(key, `${ERROR_MESSAGES.invalid} ${key}`).isEmail(),
+  checkIsEmpty(key)
 ]
 
 const checkPassword = () => checkIsEmpty('password')

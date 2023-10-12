@@ -8,6 +8,7 @@ import {
 } from 'shared/types/redux';
 import { SliceNames } from 'shared/redux/sliceNames';
 import { UserSchema } from '../types/userSchema';
+import { removeLocalStorage } from 'shared/lib/localstorage';
 
 const initialState: UserSchema = {
     isLoading: false,
@@ -21,7 +22,7 @@ export const userSlice = createSlice({
     reducers: {
         signOut: (state: UserSchema) => {
             state.data = undefined;
-            localStorage.removeItem(USER_LOCALSTORAGE_KEY);
+            removeLocalStorage(USER_LOCALSTORAGE_KEY)
         },
         setError: (state: UserSchema, action: PayloadAction<string>) => {
             state.error = action.payload;
