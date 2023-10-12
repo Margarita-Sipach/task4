@@ -38,7 +38,8 @@ class UserService {
   }
 
   async signUp (userData: SignUpType) {
-    const hashPassword = bcrypt.hashSync(userData.password, 7)
+	const salt = 7;
+    const hashPassword = bcrypt.hashSync(userData.password, salt)
     const user = User.create({ ...userData, password: hashPassword })
     return await user
   }
