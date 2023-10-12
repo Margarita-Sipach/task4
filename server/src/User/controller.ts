@@ -2,6 +2,9 @@ import { validationResult } from 'express-validator'
 import UserService from './service'
 import { type Request, type Response } from 'express'
 import { clientErrorHandler, errorHandler, serverErrorHandler } from '../lib/errorHandlers'
+import { ERROR_MESSAGES } from '../const/errorMessages'
+import { Error, MongooseError } from 'mongoose'
+import { MongoServerError } from 'mongodb'
 
 class UserController {
   async create (req: Request, res: Response) {
@@ -60,6 +63,7 @@ class UserController {
       const user = await UserService.signUp({ ...req.body, isActive: true })
       return res.json(user)
     } catch (e) {
+	  if(e instanceof MongoServerError && e.code === 11000) return errorHandler(res, 400, ERROR_MESSAGES.userExist)
       return serverErrorHandler(res, e)
     }
   }

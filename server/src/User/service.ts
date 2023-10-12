@@ -38,8 +38,6 @@ class UserService {
   }
 
   async signUp (userData: SignUpType) {
-    const isUserExist = await User.findOne({ email: userData.email })
-    if (isUserExist) throw new Error(ERROR_MESSAGES.userExist)
     const hashPassword = bcrypt.hashSync(userData.password, 7)
     const user = User.create({ ...userData, password: hashPassword })
     return await user
