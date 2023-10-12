@@ -4,7 +4,7 @@ import cors from 'cors'
 
 import router from './router/router'
 
-const PORT = 5000
+const PORT = process.env.PORT || 5000
 const DB_URL = 'mongodb+srv://user:user@cluster0.p4kyw8m.mongodb.net/?retryWrites=true&w=majority'
 
 const app = express()
