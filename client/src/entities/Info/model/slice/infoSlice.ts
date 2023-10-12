@@ -49,6 +49,7 @@ export const infoSlice = createSlice({
             .addMatcher(isFulfilledAction(SliceNames.info), (state, action) => {
                 state.isLoading = false;
                 state.checkedIds = [];
+                state.isAllChecked = false;
                 state.users = action.payload;
             });
     },

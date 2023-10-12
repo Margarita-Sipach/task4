@@ -26,7 +26,6 @@ class UserController {
       const { ids, isActive } = req.body
       await Promise.all(ids.map(async (id: string) => await UserService.update(id, isActive)))
       const users = await UserService.getAll()
-      console.log(users)
       return res.json(users)
     } catch (e) {
       if (e instanceof Error) {

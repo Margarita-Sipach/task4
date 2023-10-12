@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { AppModal } from 'shared/ui/AppModal';
 import { Input } from 'shared/ui/Input';
 import { PageContainer } from 'shared/ui/PageContainer';
 

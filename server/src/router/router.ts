@@ -23,7 +23,7 @@ router.post(
   Routes.signIn,
   [
     ...checkEmail(),
-    checkPassword
+    checkPassword()
   ],
   PostController.signIn
 )
