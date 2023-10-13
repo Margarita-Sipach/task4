@@ -13,8 +13,8 @@ export const AppNav = () => {
         if (user) {
             return (
                 <>
-                    <Nav.Link href="/" disabled>{user?.username || 'User'}</Nav.Link>
-                    <Nav.Link onClick={() => dispatch(userActions.signOut())}>Sign Out</Nav.Link>
+                    <Nav.Link disabled>{user?.username || 'User'}</Nav.Link>
+                    <Nav.Link href={RoutePath.sign_in} onClick={() => dispatch(userActions.signOut())}>Sign Out</Nav.Link>
                 </>
             );
         }
