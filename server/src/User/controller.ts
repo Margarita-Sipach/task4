@@ -27,7 +27,8 @@ class UserController {
 
   async update (req: Request, res: Response) {
     try {
-      const { ids, isActive } = req.body
+      const { ids, isActive, userId } = req.body
+	  await UserService.getUserById(userId)
       await Promise.all(ids.map(async (id: string) => await UserService.update(id, isActive)))
       const users = await UserService.getAll()
       return res.json(users)
@@ -38,7 +39,9 @@ class UserController {
 
   async delete (req: Request, res: Response) {
     try {
-      await Promise.all(req.body.map(async (id: string) => await UserService.delete(id)))
+	  const {userId, ids} = req.body;
+	  await UserService.getUserById(userId)
+      await Promise.all(ids.map(async (id: string) => await UserService.delete(id)))
       return res.json(await UserService.getAll())
     } catch (e) {
       return serverErrorHandler(res, e)

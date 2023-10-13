@@ -18,13 +18,13 @@ export class API {
         return res.data;
     }
 
-    async deleteUsers(ids: string[]) {
-        const res = await this.instance.post(routes.users, ids);
+    async deleteUsers(userId: string, ids: string[]) {
+        const res = await this.instance.post(routes.users, {ids, userId});
         return res.data;
     }
 
-    async updateUsers(ids: string[], isActive: boolean) {
-        const res = await this.instance.put(routes.users, { ids, isActive });
+    async updateUsers(userId: string, ids: string[], isActive: boolean) {
+        const res = await this.instance.put(routes.users, { ids, isActive, userId });
         return res.data;
     }
 

@@ -8,9 +8,10 @@ export const updateUsers = createAsyncThunk<UserType[], boolean, ThunkConfig<str
     'info/updateUsers',
     async (changedIsActive, { extra, rejectWithValue, getState }) => {
         try {
-            const { info } = getState();
+            const { info, user } = getState();
+			if(!user.data?._id) throw new Error(ERROR_MESSAGES.noUser);
             if (!info.checkedIds.length) throw new Error(ERROR_MESSAGES.noCheckbox);
-            const data = await extra.api.updateUsers(info.checkedIds, changedIsActive);
+            const data = await extra.api.updateUsers(user.data?._id, info.checkedIds, changedIsActive);
             if (!data) throw new Error(ERROR_MESSAGES.noData);
             return data;
         } catch (error) {
